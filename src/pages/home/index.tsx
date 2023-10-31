@@ -8,7 +8,7 @@ const font = Rubik({
   subsets: ["latin-ext"],
 });
 
-export const getServerSideProps = async ({
+export const getServerSideProps = ({
   req,
   resolvedUrl,
 }: GetServerSidePropsContext) => {
