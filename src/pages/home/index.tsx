@@ -9,12 +9,13 @@ const font = Rubik({
 });
 
 export const getServerSideProps = ({ req, res }: GetServerSidePropsContext) => {
+  console.log("COOKIES", req.headers.cookie);
   const cookieToken = req.headers.cookie?.split("=")[1];
   if (!cookieToken) {
     return {
       redirect: {
         destination: "/login",
-        permanent: true,
+        permanent: false,
       },
     };
   }
@@ -23,14 +24,14 @@ export const getServerSideProps = ({ req, res }: GetServerSidePropsContext) => {
     return {
       redirect: {
         destination: "/login",
-        permanent: true,
+        permanent: false,
       },
     };
   }
   return {
     redirect: {
       destination: req.headers.location ?? "/home",
-      permanent: true,
+      permanent: false,
     },
   };
 };
