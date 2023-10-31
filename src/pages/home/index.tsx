@@ -75,10 +75,16 @@ const Home: React.FC<
           <h1 className="text-xl text-white">Citi frame</h1>
         </nav>
         <div className="grid grow place-items-center bg-green-50 px-4 py-2">
-          Post Login Content -{" "}
-          {locationVal ? new Date(parseInt(locationVal)).toString() : ""}
+          Post Login Content
+          {locationVal
+            ? `- Token generated on ${new Date(
+                parseInt(locationVal),
+              ).toString()}`
+            : ""}
         </div>
       </main>
     </>
   );
 };
+
+export default Home;
