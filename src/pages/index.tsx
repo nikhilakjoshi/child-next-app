@@ -1,7 +1,6 @@
-import { GetServerSideProps } from "next";
 import Head from "next/head";
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps = () => {
   return {
     redirect: {
       destination: "/home",

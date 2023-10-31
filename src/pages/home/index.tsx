@@ -1,14 +1,13 @@
 import Head from "next/head";
 import clsx from "clsx";
 import { Rubik } from "next/font/google";
-import { GetServerSideProps } from "next";
+import type { GetServerSidePropsContext } from "next";
 
 const font = Rubik({
   subsets: ["latin-ext"],
 });
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  console.log(req.headers.cookie);
+export const getServerSideProps = ({ req }: GetServerSidePropsContext) => {
   const cookieToken = req.headers.cookie?.split("=")[1];
   if (!cookieToken) {
     return {
