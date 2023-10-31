@@ -7,7 +7,7 @@ type ResponseData = {
 
 const cors = Cors({
   methods: ["POST", "GET", "HEAD"],
-  origin: "https://main.d1d2reo7k6dk9i.amplifyapp.com",
+  origin: "https://parent-next-app.vercel.app",
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],
 });
