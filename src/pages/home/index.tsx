@@ -2,18 +2,19 @@ import Head from "next/head";
 import clsx from "clsx";
 import { Rubik } from "next/font/google";
 import type { GetServerSidePropsContext } from "next";
+import { useRouter } from "next/router";
 
 const font = Rubik({
   subsets: ["latin-ext"],
 });
 
-export const getServerSideProps = ({ req }: GetServerSidePropsContext) => {
+export const getServerSideProps = ({ req, res }: GetServerSidePropsContext) => {
   const cookieToken = req.headers.cookie?.split("=")[1];
   if (!cookieToken) {
     return {
       redirect: {
         destination: "/login",
-        permanent: false,
+        permanent: true,
       },
     };
   }
@@ -22,18 +23,20 @@ export const getServerSideProps = ({ req }: GetServerSidePropsContext) => {
     return {
       redirect: {
         destination: "/login",
-        permanent: false,
+        permanent: true,
       },
     };
   }
   return {
-    props: {
-      cookie: req.headers.cookie ?? "none",
+    redirect: {
+      destination: req.headers.location || "/home",
+      permanent: true,
     },
   };
 };
 
 export default function Home() {
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -46,7 +49,7 @@ export default function Home() {
           <h1 className="text-xl text-white">Citi frame</h1>
         </nav>
         <div className="grid grow place-items-center bg-green-50 px-4 py-2">
-          Post Login Content
+          Post Login Content - {JSON.stringify(router.asPath)}
         </div>
       </main>
     </>
