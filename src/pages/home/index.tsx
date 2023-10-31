@@ -12,7 +12,7 @@ export const getServerSideProps = ({
   req,
   resolvedUrl,
 }: GetServerSidePropsContext) => {
-  const cookies = req.headers.cookie?.split(",");
+  const cookies = req.headers.cookie?.split("; ");
   const cookieTokenS = cookies?.find((cookie) => cookie.includes("token"));
   console.log("resolvedUrl", resolvedUrl);
   if (resolvedUrl !== "/login") {
