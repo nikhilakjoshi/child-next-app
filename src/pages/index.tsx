@@ -1,15 +1,14 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 
-// GetServerSideProps
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   return {
-//     redirect: {
-//       destination: "",
-//       permanent: false,
-//     },
-//   };
-// };
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    redirect: {
+      destination: "/home",
+      permanent: false,
+    },
+  };
+};
 
 export default function Home() {
   return (
