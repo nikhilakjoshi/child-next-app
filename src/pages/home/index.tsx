@@ -1,51 +1,60 @@
 import Head from "next/head";
 import clsx from "clsx";
 import { Rubik } from "next/font/google";
-import type { GetServerSidePropsContext } from "next";
+import type { GetServerSidePropsContext, GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 
 const font = Rubik({
   subsets: ["latin-ext"],
 });
 
-export const getServerSideProps = ({ req, res }: GetServerSidePropsContext) => {
+export const getServerSideProps = async ({
+  req,
+  resolvedUrl,
+}: GetServerSidePropsContext) => {
   const cookies = req.headers.cookie?.split(",");
   const cookieTokenS = cookies?.find((cookie) => cookie.includes("token"));
-  if (!cookieTokenS)
+  console.log("resolvedUrl", resolvedUrl);
+  if (resolvedUrl !== "/login") {
+    if (!cookieTokenS)
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    const cookieToken = cookieTokenS.split("=")[1];
+    if (!cookieToken)
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    const parsed = Buffer.from(cookieToken, "base64").toString("utf-8");
+    if (parsed !== "This is a secret token") {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    }
+    const locationCookieS = cookies?.find((cookie) =>
+      cookie.includes("location"),
+    );
+    const locationCookie = locationCookieS?.split("=")[1];
     return {
       redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  const cookieToken = cookieTokenS.split("=")[1];
-  if (!cookieToken)
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  const parsed = Buffer.from(cookieToken, "base64").toString("utf-8");
-  if (parsed !== "This is a secret token") {
-    return {
-      redirect: {
-        destination: "/login",
+        destination: locationCookie
+          ? `/home?location=${locationCookie}`
+          : "/home",
         permanent: false,
       },
     };
   }
-  const locationCookieS = cookies?.find((cookie) =>
-    cookie.includes("location"),
-  );
-  const locationCookie = locationCookieS?.split("=")[1];
   return {
-    redirect: {
-      destination: locationCookie
-        ? `/home?location=${locationCookie}`
-        : "/home",
-      permanent: false,
-    },
+    props: {},
   };
 };
 
