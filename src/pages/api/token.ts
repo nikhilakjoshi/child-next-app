@@ -39,8 +39,8 @@ export default async function handler(
   const updatedTime = new Date(currentTime + 5 * 60 * 1000);
   await runMiddleware(req, res, cors);
   res.setHeader("Set-Cookie", [
-    `token=${token}; domain=child-next-app.vercel.app;Path=/home; SameSite=None; Secure; Expires=${updatedTime.toUTCString()}`,
-    `location=${new Date().getTime()}; domain=child-next-app.vercel.app;Path=/home; SameSite=None; Secure; Expires=${updatedTime.toUTCString()}`,
+    `token=${token}; domain=child-next-app.vercel.app;Path=/home; SameSite=Lax; Secure; Expires=${updatedTime.toUTCString()}`,
+    `location=${new Date().getTime()}; domain=child-next-app.vercel.app;Path=/home; SameSite=Lax; Secure; Expires=${updatedTime.toUTCString()}`,
   ]);
   return res.status(200).send({ message: "Token set" });
 }
