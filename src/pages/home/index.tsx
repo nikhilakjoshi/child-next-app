@@ -1,7 +1,11 @@
 import Head from "next/head";
 import clsx from "clsx";
 import { Rubik } from "next/font/google";
-import type { GetServerSidePropsContext, GetServerSideProps } from "next";
+import type {
+  GetServerSidePropsContext,
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+} from "next";
 import { useRouter } from "next/router";
 
 const font = Rubik({
@@ -45,11 +49,8 @@ export const getServerSideProps = ({
     );
     const locationCookie = locationCookieS?.split("=")[1];
     return {
-      redirect: {
-        destination: locationCookie
-          ? `/home?location=${locationCookie}`
-          : "/home",
-        permanent: false,
+      props: {
+        locationVal: locationCookie,
       },
     };
   }
@@ -58,7 +59,9 @@ export const getServerSideProps = ({
   };
 };
 
-export default function Home() {
+const Home: React.FC<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ locationVal }) => {
   const router = useRouter();
   return (
     <>
@@ -72,9 +75,10 @@ export default function Home() {
           <h1 className="text-xl text-white">Citi frame</h1>
         </nav>
         <div className="grid grow place-items-center bg-green-50 px-4 py-2">
-          Post Login Content - {JSON.stringify(router.asPath)}
+          Post Login Content -{" "}
+          {locationVal ? new Date(parseInt(locationVal)).toString() : ""}
         </div>
       </main>
     </>
   );
-}
+};
