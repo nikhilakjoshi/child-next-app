@@ -9,16 +9,23 @@ const font = Rubik({
 });
 
 export const getServerSideProps = ({ req, res }: GetServerSidePropsContext) => {
-  console.log("COOKIES", req.headers.cookie);
-  const cookieToken = req.headers.cookie?.split("=")[1];
-  if (!cookieToken) {
+  const cookies = req.headers.cookie?.split(",");
+  const cookieTokenS = cookies?.find((cookie) => cookie.includes("token"));
+  if (!cookieTokenS)
     return {
       redirect: {
         destination: "/login",
         permanent: false,
       },
     };
-  }
+  const cookieToken = cookieTokenS.split("=")[1];
+  if (!cookieToken)
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
   const parsed = Buffer.from(cookieToken, "base64").toString("utf-8");
   if (parsed !== "This is a secret token") {
     return {
@@ -28,9 +35,15 @@ export const getServerSideProps = ({ req, res }: GetServerSidePropsContext) => {
       },
     };
   }
+  const locationCookieS = cookies?.find((cookie) =>
+    cookie.includes("location"),
+  );
+  const locationCookie = locationCookieS?.split("=")[1];
   return {
     redirect: {
-      destination: req.headers.location ?? "/home",
+      destination: locationCookie
+        ? `/home?location=${locationCookie}`
+        : "/home",
       permanent: false,
     },
   };

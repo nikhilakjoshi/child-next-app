@@ -40,7 +40,7 @@ export default async function handler(
   await runMiddleware(req, res, cors);
   res.setHeader("Set-Cookie", [
     `token=${token}; domain=child-next-app.vercel.app;Path=/home; SameSite=None; Secure; Expires=${updatedTime.toUTCString()}`,
-    `location=/home?token=${token}; domain=child-next-app.vercel.app;Path=/home; SameSite=None; Secure; Expires=${updatedTime.toUTCString()}`,
+    `location=${new Date().getTime()}; domain=child-next-app.vercel.app;Path=/home; SameSite=None; Secure; Expires=${updatedTime.toUTCString()}`,
   ]);
   return res.status(200).send({ message: "Token set" });
 }
