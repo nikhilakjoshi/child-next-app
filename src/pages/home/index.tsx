@@ -29,7 +29,7 @@ export const getServerSideProps = ({ req, res }: GetServerSidePropsContext) => {
   }
   return {
     redirect: {
-      destination: req.headers.location || "/home",
+      destination: req.headers.location ?? "/home",
       permanent: true,
     },
   };
