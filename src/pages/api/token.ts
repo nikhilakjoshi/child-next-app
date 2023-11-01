@@ -7,12 +7,13 @@ type ResponseData = {
 
 const cors = Cors({
   methods: ["POST", "GET", "HEAD"],
-  origin: [
-    "https://parent-next-app.vercel.app",
-    "https://child-next-app.vercel.app",
-  ],
+  // origin: [
+  //   "https://parent-next-app.vercel.app",
+  //   "https://child-next-app.vercel.app",
+  // ],
+  origin: "*",
   credentials: true,
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: ["Content-Type"],
 });
 
 function runMiddleware(
