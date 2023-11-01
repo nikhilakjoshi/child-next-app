@@ -7,7 +7,7 @@ type ResponseData = {
 
 const cors = Cors({
   methods: ["POST", "GET", "HEAD"],
-  origin: ["*.vercel.app"],
+  origin: "https://parent-next-app.vercel.app",
   credentials: true,
   allowedHeaders: ["Content-Type"],
 });
