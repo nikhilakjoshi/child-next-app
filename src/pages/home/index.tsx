@@ -7,6 +7,7 @@ import type {
   InferGetServerSidePropsType,
 } from "next";
 import { useRouter } from "next/router";
+import { useCallback, useEffect } from "react";
 
 const font = Rubik({
   subsets: ["latin-ext"],
@@ -19,6 +20,8 @@ export const getServerSideProps = ({
   const cookies = req.headers.cookie?.split("; ");
   const cookieTokenS = cookies?.find((cookie) => cookie.includes("token"));
   console.log("resolvedUrl", resolvedUrl);
+  console.log("METHOD", req.method);
+  console.log("cookies", req.headers.cookie);
   if (resolvedUrl !== "/login") {
     if (!cookieTokenS)
       return {
@@ -63,6 +66,20 @@ const Home: React.FC<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ locationVal }) => {
   const router = useRouter();
+
+  const sayHello = useCallback(async () => {
+    const resp = await fetch("/api/hello");
+    const respJson = await resp.json();
+  }, []);
+
+  useEffect(() => {
+    sayHello()
+      .then((a) => {
+        console.log(a);
+      })
+      .catch((e) => console.error(e));
+  }, []);
+
   return (
     <>
       <Head>
