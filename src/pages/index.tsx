@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useEffect } from "react";
 
 export const getServerSideProps = () => {
   return {
@@ -10,6 +11,16 @@ export const getServerSideProps = () => {
 };
 
 export default function Home() {
+  useEffect(() => {
+    document.requestStorageAccess().then(
+      () => {
+        console.log("storage access granted");
+      },
+      () => {
+        console.log("storage access rejected");
+      },
+    );
+  }, []);
   return (
     <>
       <Head>

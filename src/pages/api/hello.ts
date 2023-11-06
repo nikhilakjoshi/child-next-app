@@ -28,7 +28,7 @@ type ResponseData = {
 //   });
 // }
 
-export default async function handler(
+export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>,
 ) {

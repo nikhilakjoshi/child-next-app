@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { Rubik } from "next/font/google";
 import Head from "next/head";
+import { useEffect, useRef } from "react";
 
 const font = Rubik({
   subsets: ["latin-ext"],
@@ -27,6 +28,18 @@ export default function Login() {
           </div> */}
           Pre login Content
         </div>
+        <button
+          onClick={() => {
+            document.requestStorageAccess().then(
+              () => {
+                document.cookie = "heyCookie=cookiehter;";
+              },
+              () => console.log("access denied"),
+            );
+          }}
+        >
+          Accept cookies
+        </button>
       </main>
     </>
   );

@@ -69,7 +69,7 @@ const Home: React.FC<
 
   const sayHello = useCallback(async () => {
     const resp = await fetch("/api/hello");
-    const respJson = await resp.json();
+    const respJson = (await resp.json()) as { message: string };
   }, []);
 
   useEffect(() => {
