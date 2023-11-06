@@ -1,13 +1,25 @@
 import clsx from "clsx";
 import { Rubik } from "next/font/google";
 import Head from "next/head";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 const font = Rubik({
   subsets: ["latin-ext"],
 });
 
 export default function Login() {
+  const sayHello = useCallback(async () => {
+    const resp = await fetch("/api/hello");
+    const respJson = (await resp.json()) as { message: string };
+  }, []);
+
+  useEffect(() => {
+    sayHello()
+      .then((a) => {
+        console.log(a);
+      })
+      .catch((e) => console.error(e));
+  }, []);
   return (
     <>
       <Head>
