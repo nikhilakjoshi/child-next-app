@@ -39,8 +39,8 @@ export default async function handler(
   const updatedTime = new Date(currentTime + 5 * 60 * 1000);
   await runMiddleware(req, res, cors);
   res.setHeader("Set-Cookie", [
-    `token=${token}; domain=.vercel.app;Path=/; Secure;`,
-    `location=${new Date().getTime()}; domain=.vercel.app;Path=/; Secure;`,
+    `token=${token}; domain=.vercel.app;Path=/; Secure;HttpOnly;`,
+    `location=${new Date().getTime()}; domain=.vercel.app;Path=/; Secure;HttpOnly;`,
   ]);
   return res.status(200).send({ message: "Token set" });
 }
