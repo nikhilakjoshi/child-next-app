@@ -9,7 +9,7 @@ const font = Rubik({
 
 export default function Login() {
   const sayHello = useCallback(async () => {
-    const resp = await fetch("/api/hello");
+    const resp = await fetch("/api/token");
     const respJson = (await resp.json()) as { message: string };
   }, []);
 
