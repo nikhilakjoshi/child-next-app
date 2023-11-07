@@ -10,6 +10,7 @@ const cors = Cors({
   origin: "https://parent-next-app.vercel.app",
   credentials: true,
   allowedHeaders: ["Content-Type", "Cookie", "Set-Cookie"],
+  exposedHeaders: ["Content-Type", "Cookie", "Set-Cookie"],
 });
 
 function runMiddleware(
