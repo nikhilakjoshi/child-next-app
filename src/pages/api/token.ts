@@ -9,7 +9,7 @@ const cors = Cors({
   methods: ["POST", "GET", "HEAD"],
   origin: "https://parent-next-app.vercel.app",
   credentials: true,
-  allowedHeaders: ["Content-Type"],
+  allowedHeaders: ["Content-Type", "Cookie", "Set-Cookie"],
 });
 
 function runMiddleware(
